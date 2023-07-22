@@ -46,67 +46,6 @@ describe('Citas Controller', () => {
         validationResult.error = validationError
     })
 
-    describe('getAllAppointments', () => {
-        it('should get all appointments', async () => {
-            // Mock Process
-            const appointments: Appointment[] = [
-                {
-                    identificacion_paciente: "1015786986",
-                    especialidad: "Cardiología",
-                    doctor: "Wilamr Andres",
-                    consultorio: 106,
-                    horario: "1:30 pm",
-                    id_cita: 1,
-                    id_doctor: 10,
-                    created_at: "2023-07-06T02:59:54.741Z",
-                    updated_at: "null"
-                },
-                {
-                    identificacion_paciente: "1015786987",
-                    especialidad: "Dermatología",
-                    doctor: "Sergio Gómez",
-                    consultorio: 107,
-                    horario: "2:00 pm",
-                    id_cita: 2,
-                    id_doctor: 8,
-                    created_at: "2023-07-05T03:52:54.741Z",
-                    updated_at: "null"
-                },
-                {
-                    identificacion_paciente: "1012459874",
-                    especialidad: "Medicina general",
-                    doctor: "Laura Gonzalez",
-                    consultorio: 108,
-                    horario: "7:30 am",
-                    id_cita: 3,
-                    id_doctor: 9,
-                    created_at: "2023-07-01T12:31:52.211Z",
-                    updated_at: "null"
-                }
-            ];
-
-            (appointmentService.getAllAppointments as jest.Mock).mockResolvedValue(appointments)
-
-            // Method execution
-            await appointmentController.getAllAppointment(mockReq, mockRes)
-
-            // Asserts
-            expect(appointmentService.getAllAppointments).toHaveBeenCalled()
-            expect(mockRes.json).toHaveBeenCalledWith(appointments)
-            expect(mockRes.status).toHaveBeenCalledWith(200)
-        })
-
-        it('should be handler error and return 400 status', async () => {
-            const error = new Error('Internal Server Error');
-            (appointmentService.getAllAppointments as jest.Mock).mockRejectedValue(error)
-
-            await appointmentController.getAllAppointment(mockReq, mockRes)
-
-            expect(appointmentService.getAllAppointments).toHaveBeenCalled()
-            expect(mockRes.json).toHaveBeenCalledWith({ message: "Error getting all appointments" })
-            expect(mockRes.status).toHaveBeenCalledWith(400)
-        })
-    })
 
     describe('updateAppointment', () => {
         it('should update appointment by id', async () => {
@@ -124,7 +63,7 @@ describe('Citas Controller', () => {
             {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -184,6 +123,129 @@ describe('Citas Controller', () => {
         })
     })
 
+    describe('getAllAppointments', () => {
+        it('should get all appointments', async () => {
+            // Mock Process
+            const appointments: Appointment[] = [
+                {
+                    identificacion_paciente: "1015786986",
+                    especialidad: "Cardiología",
+                    doctor: "Wilamr Andres",
+                    consultorio: 106,
+                    horario: "1:30 pm",
+                    id_cita: 1,
+                    id_doctor: 10,
+                    created_at: "2023-07-06T02:59:54.741Z",
+                    updated_at: "null"
+                },
+                {
+                    identificacion_paciente: "1015786987",
+                    especialidad: "Dermatología",
+                    doctor: "Miguel Perez",
+                    consultorio: 107,
+                    horario: "2:00 pm",
+                    id_cita: 2,
+                    id_doctor: 8,
+                    created_at: "2023-07-05T03:52:54.741Z",
+                    updated_at: "null"
+                },
+                {
+                    identificacion_paciente: "1012459874",
+                    especialidad: "Medicina general",
+                    doctor: "Eduardo Peña",
+                    consultorio: 108,
+                    horario: "7:30 am",
+                    id_cita: 3,
+                    id_doctor: 9,
+                    created_at: "2023-07-01T12:31:52.211Z",
+                    updated_at: "null"
+                }
+            ];
+
+            (appointmentService.getAllAppointments as jest.Mock).mockResolvedValue(appointments)
+
+            // Method execution
+            await appointmentController.getAllAppointment(mockReq, mockRes)
+
+            // Asserts
+            expect(appointmentService.getAllAppointments).toHaveBeenCalled()
+            expect(mockRes.json).toHaveBeenCalledWith(appointments)
+            expect(mockRes.status).toHaveBeenCalledWith(200)
+        })
+
+        it('should be handler error and return 400 status', async () => {
+            const error = new Error('Internal Server Error');
+            (appointmentService.getAllAppointments as jest.Mock).mockRejectedValue(error)
+
+            await appointmentController.getAllAppointment(mockReq, mockRes)
+
+            expect(appointmentService.getAllAppointments).toHaveBeenCalled()
+            expect(mockRes.json).toHaveBeenCalledWith({ message: "Error getting all appointments" })
+            expect(mockRes.status).toHaveBeenCalledWith(400)
+        })
+    })
+
+    describe('getAppointmentById', () => {
+        it('should get appointment by id', async () => {
+            // Mock Process
+            const appointment: Appointment = {
+                identificacion_paciente: "1015786986",
+                especialidad: "Cardiología",
+                doctor: "wilmar peña",
+                consultorio: 106,
+                horario: "1:30 pm",
+                id_cita: 1,
+                id_doctor: 10,
+                created_at: "2023-07-06T02:59:54.741Z",
+                updated_at: "null"
+            };
+            (mockReq.params) = { id: "1" };
+            (appointmentService.getAppointmentById as jest.Mock).mockResolvedValue(appointment)
+
+            // Method execution
+            await appointmentController.getAppointmentById(mockReq, mockRes)
+
+            // Asserts
+            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
+            expect(mockRes.json).toHaveBeenCalledWith(appointment)
+            expect(mockRes.status).toHaveBeenCalledWith(200)
+        })
+
+        it('should return 400 if an appointment not found', async () => {
+            (mockReq.params) = { id: "1" };
+            (appointmentService.getAppointmentById as jest.Mock).mockResolvedValue(null)
+
+            await appointmentController.getAppointmentById(mockReq, mockRes)
+
+            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
+            expect(mockRes.json).toHaveBeenCalledWith({ error: "Record has not found yet" })
+            expect(mockRes.status).toHaveBeenCalledWith(400)
+        })
+
+        it('should return 400 if an error occurs', async () => {
+            const error = new Error('Internal Server Error');
+            (mockReq.params) = { id: "1" };
+            (appointmentService.getAppointmentById as jest.Mock).mockRejectedValue(error)
+
+            await appointmentController.getAppointmentById(mockReq, mockRes)
+
+            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
+            expect(mockRes.json).toHaveBeenCalledWith({ error: "Failed to retrieve appointment" })
+            expect(mockRes.status).toHaveBeenCalledWith(400)
+        })
+
+        it('should return error if id is NaN', async () => {
+            (appointmentService.getAppointmentById as jest.Mock).mockRejectedValue(NaN)
+
+            await appointmentController.getAppointmentById(mockReq, mockRes)
+
+            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
+            expect(mockRes.json).toHaveBeenCalledWith({ error: "Failed to retrieve appointment" })
+            expect(mockRes.status).toHaveBeenCalledWith(400)
+        })
+    })
+
+
     describe('createAppointment', () => {
         it('should create a new appointment and return info', async () => {
             // Mock Process
@@ -191,7 +253,7 @@ describe('Citas Controller', () => {
             {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -254,65 +316,6 @@ describe('Citas Controller', () => {
         })
     })
 
-    describe('getAppointmentById', () => {
-        it('should get appointment by id', async () => {
-            // Mock Process
-            const appointment: Appointment = {
-                identificacion_paciente: "1015786986",
-                especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
-                consultorio: 106,
-                horario: "1:30 pm",
-                id_cita: 1,
-                id_doctor: 10,
-                created_at: "2023-07-06T02:59:54.741Z",
-                updated_at: "null"
-            };
-            (mockReq.params) = { id: "1" };
-            (appointmentService.getAppointmentById as jest.Mock).mockResolvedValue(appointment)
-
-            // Method execution
-            await appointmentController.getAppointmentById(mockReq, mockRes)
-
-            // Asserts
-            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
-            expect(mockRes.json).toHaveBeenCalledWith(appointment)
-            expect(mockRes.status).toHaveBeenCalledWith(200)
-        })
-
-        it('should return 400 if an appointment not found', async () => {
-            (mockReq.params) = { id: "1" };
-            (appointmentService.getAppointmentById as jest.Mock).mockResolvedValue(null)
-
-            await appointmentController.getAppointmentById(mockReq, mockRes)
-
-            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
-            expect(mockRes.json).toHaveBeenCalledWith({ error: "Record has not found yet" })
-            expect(mockRes.status).toHaveBeenCalledWith(400)
-        })
-
-        it('should return 400 if an error occurs', async () => {
-            const error = new Error('Internal Server Error');
-            (mockReq.params) = { id: "1" };
-            (appointmentService.getAppointmentById as jest.Mock).mockRejectedValue(error)
-
-            await appointmentController.getAppointmentById(mockReq, mockRes)
-
-            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
-            expect(mockRes.json).toHaveBeenCalledWith({ error: "Failed to retrieve appointment" })
-            expect(mockRes.status).toHaveBeenCalledWith(400)
-        })
-
-        it('should return error if id is NaN', async () => {
-            (appointmentService.getAppointmentById as jest.Mock).mockRejectedValue(NaN)
-
-            await appointmentController.getAppointmentById(mockReq, mockRes)
-
-            expect(appointmentService.getAppointmentById).toHaveBeenCalledWith(1)
-            expect(mockRes.json).toHaveBeenCalledWith({ error: "Failed to retrieve appointment" })
-            expect(mockRes.status).toHaveBeenCalledWith(400)
-        })
-    })
 
     describe('deleteAppointment', () => {
         it('should delete appointment by id', async () => {

@@ -9,6 +9,8 @@ import { DoctorCreationError } from "../utils/customErrors"
 const mockReq = {} as Request
 const mockRes = {} as Response
 let validationResult = {} as Joi.ValidationResult
+
+
 describe('DoctorController', () => {
     let doctorService: DoctorService
     let doctorController: DoctorController
@@ -44,36 +46,6 @@ describe('DoctorController', () => {
         validationResult.error = validationError
     })
 
-    describe('getAllDoctors', () => {
-        it('should get all doctors', async () => {
-            // Mock Process
-            const doctors: Doctor[] = [
-                { id_doctor: 1, nombre: 'Carlos', apellido: 'Caceres', especialidad: 'Medicina General', consultorio: 100 },
-                { id_doctor: 2, nombre: 'Alveiro', apellido: 'Tarsisio', especialidad: 'Ortopedia', consultorio: 101 },
-            ];
-
-            (doctorService.getAllDoctors as jest.Mock).mockResolvedValue(doctors)
-
-            // Method execution
-            await doctorController.getAllDoctors(mockReq, mockRes)
-
-            // Asserts
-            expect(doctorService.getAllDoctors).toHaveBeenCalled()
-            expect(mockRes.json).toHaveBeenCalledWith(doctors)
-            expect(mockRes.status).toHaveBeenCalledWith(200)
-        })
-
-        it('should be handler error and return 400 status', async () => {
-            const error = new Error('Internal Server Error');
-            (doctorService.getAllDoctors as jest.Mock).mockRejectedValue(error)
-
-            await doctorController.getAllDoctors(mockReq, mockRes)
-
-            expect(doctorService.getAllDoctors).toHaveBeenCalled()
-            expect(mockRes.json).toHaveBeenCalledWith({ message: "Error getting all doctors" })
-            expect(mockRes.status).toHaveBeenCalledWith(400)
-        })
-    })
 
     describe('createDoctor', () => {
         it('should create a new doctor and return info', async () => {
@@ -149,6 +121,37 @@ describe('DoctorController', () => {
                 error_name: "DoctorCreationError",
                 message: "Failed Creating a doctor"
             })
+            expect(mockRes.status).toHaveBeenCalledWith(400)
+        })
+    })
+
+    describe('getAllDoctors', () => {
+        it('should get all doctors', async () => {
+            // Mock Process
+            const doctors: Doctor[] = [
+                { id_doctor: 1, nombre: 'Carlos', apellido: 'Caceres', especialidad: 'Medicina General', consultorio: 100 },
+                { id_doctor: 2, nombre: 'Alveiro', apellido: 'Tarsisio', especialidad: 'Ortopedia', consultorio: 101 },
+            ];
+
+            (doctorService.getAllDoctors as jest.Mock).mockResolvedValue(doctors)
+
+            // Method execution
+            await doctorController.getAllDoctors(mockReq, mockRes)
+
+            // Asserts
+            expect(doctorService.getAllDoctors).toHaveBeenCalled()
+            expect(mockRes.json).toHaveBeenCalledWith(doctors)
+            expect(mockRes.status).toHaveBeenCalledWith(200)
+        })
+
+        it('should be handler error and return 400 status', async () => {
+            const error = new Error('Internal Server Error');
+            (doctorService.getAllDoctors as jest.Mock).mockRejectedValue(error)
+
+            await doctorController.getAllDoctors(mockReq, mockRes)
+
+            expect(doctorService.getAllDoctors).toHaveBeenCalled()
+            expect(mockRes.json).toHaveBeenCalledWith({ message: "Error getting all doctors" })
             expect(mockRes.status).toHaveBeenCalledWith(400)
         })
     })

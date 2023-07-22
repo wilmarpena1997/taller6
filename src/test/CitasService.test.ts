@@ -40,7 +40,7 @@ describe('AppointmentService', () => {
                 {
                     identificacion_paciente: "1015786986",
                     especialidad: "Cardiología",
-                    doctor: "Daniel Gómez",
+                    doctor: "Wilmar Peña",
                     consultorio: 106,
                     horario: "1:30 pm",
                     id_cita: 1,
@@ -51,7 +51,7 @@ describe('AppointmentService', () => {
                 {
                     identificacion_paciente: "1015786987",
                     especialidad: "Dermatología",
-                    doctor: "Sergio Gómez",
+                    doctor: "Doctor W",
                     consultorio: 107,
                     horario: "2:00 pm",
                     id_cita: 2,
@@ -62,7 +62,7 @@ describe('AppointmentService', () => {
                 {
                     identificacion_paciente: "1012459874",
                     especialidad: "Medicina general",
-                    doctor: "Laura Gonzalez",
+                    doctor: "Doctor P",
                     consultorio: 108,
                     horario: "7:30 am",
                     id_cita: 3,
@@ -111,7 +111,7 @@ describe('AppointmentService', () => {
             const appointmentRes: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "Doctor J",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -181,7 +181,7 @@ describe('AppointmentService', () => {
             const appointmentRes: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -208,7 +208,7 @@ describe('AppointmentService', () => {
             const appointmentRes: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -255,7 +255,7 @@ describe('AppointmentService', () => {
             const appointmentRes: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -266,7 +266,7 @@ describe('AppointmentService', () => {
             const appointmentResUpdated: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "4:30 pm",
                 id_cita: 1,
@@ -316,7 +316,7 @@ describe('AppointmentService', () => {
             const appointmentRes: Appointment = {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
@@ -351,7 +351,7 @@ describe('AppointmentService', () => {
             {
                 identificacion_paciente: "1015786986",
                 especialidad: "Cardiología",
-                doctor: "Daniel Gómez",
+                doctor: "wilmar peña",
                 consultorio: 106,
                 horario: "1:30 pm",
                 id_cita: 1,
